@@ -1,22 +1,13 @@
 // import the variables from the .env file we created
 require("dotenv").config()
-
 const express = require("express")
 const app = express()
 const jwt = require("jsonwebtoken")
+const posts = require("./utils/db")
+
+const PORT = process.env.PORT || 3000
 
 app.use(express.json())
-
-const posts = [
-  {
-    username: "Natalia",
-    title: "post 1",
-  },
-  {
-    username: "Anton",
-    title: "post 2",
-  },
-]
 
 const authenticateToken = (req, res, next) => {
   // Returns the Bearer token. The format is "Bearer token", that's why we split in the token variable.
@@ -38,6 +29,4 @@ app.get("/posts", authenticateToken, (req, res) => {
   res.json(posts.filter((post) => post.username === req.user.name))
 })
 
-const port = process.env.PORT || 3000
-
-app.listen(port, () => console.log(`Listening on port ${port}`))
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`))

@@ -10,7 +10,7 @@ app.use(express.json())
 let refreshTokens = []
 
 app.post("/token", (req, res) => {
-  const refreshToken = req.body.token
+  const refreshToken = req.body.refreshToken
   if (refreshToken == null) return res.sendStatus(401)
   if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403)
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
@@ -21,7 +21,9 @@ app.post("/token", (req, res) => {
 })
 
 app.delete("/logout", (req, res) => {
-  refreshTokens = refreshTokens.filter((token) => token !== req.body.token)
+  refreshTokens = refreshTokens.filter(
+    (token) => token !== req.body.refreshToken
+  )
 
   res.sendStatus(204)
 })

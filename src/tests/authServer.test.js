@@ -1,4 +1,4 @@
-const authServer = require("./authServer")
+const authServer = require("../../authServer")
 const supertest = require("supertest")
 const request = supertest(authServer)
 
