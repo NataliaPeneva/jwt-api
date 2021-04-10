@@ -1,6 +1,5 @@
 // import the variables from the .env file we created
 require("dotenv").config()
-
 const express = require("express")
 const app = express()
 const jwt = require("jsonwebtoken")
@@ -24,7 +23,6 @@ app.delete("/logout", (req, res) => {
   refreshTokens = refreshTokens.filter(
     (token) => token !== req.body.refreshToken
   )
-
   res.sendStatus(204)
 })
 

@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon src/serverStart.js",
+    "start:auth": "nodemon src/authServerStart.js",
     "test": "npx jest",
-    "start": "nodemon src/server.js",
-    "start:auth": "nodemon src/authStart.js",
     "test:watch": "npx jest --watch"
   },
   "keywords": [],

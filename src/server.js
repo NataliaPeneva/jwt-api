@@ -5,8 +5,6 @@ const app = express()
 const jwt = require("jsonwebtoken")
 const posts = require("./utils/db")
 
-const PORT = process.env.PORT || 3000
-
 app.use(express.json())
 
 const authenticateToken = (req, res, next) => {
@@ -29,4 +27,6 @@ app.get("/posts", authenticateToken, (req, res) => {
   res.json(posts.filter((post) => post.username === req.user.name))
 })
 
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`))
+// app.listen(PORT, () => console.log(`Listening on port ${PORT}`))
+
+module.exports = app
