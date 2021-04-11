@@ -17,7 +17,6 @@ describe("authServer/login", () => {
     // assert
     expect(response.body.accessToken).toBeDefined()
     expect(response.status).toBe(200)
-    // console.log("It works", response)
     done()
   })
 })
@@ -81,7 +80,6 @@ describe('"server/posts"', () => {
     }
     const response = await request.post("/login").send(body)
     const accessToken = response.body.accessToken
-    console.log("accessToken:", accessToken)
 
     // act, make a req with the access token. .set() checks the header.
     const responsePosts = await request2
@@ -89,7 +87,6 @@ describe('"server/posts"', () => {
       .set("Authorization", `Bearer ${accessToken}`)
       .send()
 
-    console.log("responsePosts.body is: ", responsePosts.body)
     // assert we get a valid access token
     expect(responsePosts.body).toEqual([
       {
@@ -97,11 +94,29 @@ describe('"server/posts"', () => {
         title: "post 1",
       },
     ])
-    // const user = await jwt.verify(
-    //   responseAccessToken.body.accessToken,
-    //   process.env.ACCESS_TOKEN_SECRET
-    // )
-    // expect(user.name).toBe("Johnny")
+
     done()
   })
 })
+
+describe('"authServer/logout"', () => {
+  test("should respond with 204 if refresh token successfully deleted", async (done) => {
+    // arrange, make a refresh token
+    const body = {
+      username: "Natalia",
+    }
+    const response = await request.post("/login").send(body)
+    const refreshToken = response.body.refreshToken
+
+    // act, make a req with the refresh token
+    const responseAccessToken = await request
+      .delete("/logout")
+      .send({ refreshToken })
+
+    // assert we deleted the refresh token
+    expect(responseAccessToken.status).toBe(204)
+
+    done()
+  })
+})
+
