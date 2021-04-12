@@ -21,6 +21,9 @@ const refreshToken = req.body.refreshToken
 })
 
 app.delete("/logout", (req, res) => {
+  const refreshTokenToDelete = req.body.refreshToken
+  if (!refreshTokenToDelete) return res.sendStatus(401)
+  if (!refreshTokens.includes(refreshTokenToDelete)) return res.sendStatus(403)
   refreshTokens = refreshTokens.filter(
     (token) => token !== req.body.refreshToken
   )

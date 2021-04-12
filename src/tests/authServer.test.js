@@ -120,3 +120,28 @@ describe('"authServer/logout"', () => {
   })
 })
 
+describe('"authServer/logout"', () => {
+  test("should respond with 401 error if refresh token is missing", async (done) => {
+    // act, make a req with the refresh token
+    const responseAccessToken = await request.delete("/logout").send({})
+
+    // assert we get a valid access token
+    expect(responseAccessToken.status).toBe(401)
+
+    done()
+  })
+})
+
+describe('"authServer/logout"', () => {
+  test("should respond with 403 error if refresh token is not active", async (done) => {
+    // act, make a req with the refresh token
+    const responseAccessToken = await request
+      .delete("/logout")
+      .send({ refreshToken: "bla" })
+
+    // assert we get a valid access token
+    expect(responseAccessToken.status).toBe(403)
+
+    done()
+  })
+})
