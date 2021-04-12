@@ -1,8 +1,6 @@
 const authServer = require("../authServer")
-const serverJS = require("../server")
 const supertest = require("supertest")
 const request = supertest(authServer)
-const request2 = supertest(serverJS)
 const jwt = require("jsonwebtoken")
 
 describe("authServer/login", () => {
@@ -82,7 +80,7 @@ describe('"server/posts"', () => {
     const accessToken = response.body.accessToken
 
     // act, make a req with the access token. .set() checks the header.
-    const responsePosts = await request2
+    const responsePosts = await request
       .get("/posts")
       .set("Authorization", `Bearer ${accessToken}`)
       .send()
